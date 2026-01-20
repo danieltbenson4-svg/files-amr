@@ -69,7 +69,7 @@
       const formData = new FormData(form);
 
       try {
-        const response = await fetch("http://localhost:5001/upload", {
+        const response = await fetch("https://flask-vision-api-365106142213.asia-south1.run.app/upload", {
           method: "POST",
           body: formData
         });
