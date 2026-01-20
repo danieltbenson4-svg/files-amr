@@ -53,12 +53,28 @@ def upload_files():
             saved_paths[2],
         )
 
+        # Delete uploaded files after processing
+        for filepath in saved_paths:
+            try:
+                if os.path.exists(filepath):
+                    os.remove(filepath)
+            except Exception as cleanup_error:
+                print(f"Warning: Could not delete {filepath}: {cleanup_error}")
+
         return jsonify({
             "status": "success",
             "result": result
         })
 
     except Exception as e:
+        # Clean up files even if processing failed
+        for filepath in saved_paths:
+            try:
+                if os.path.exists(filepath):
+                    os.remove(filepath)
+            except Exception as cleanup_error:
+                print(f"Warning: Could not delete {filepath}: {cleanup_error}")
+        
         return jsonify({
             "status": "error",
             "message": str(e)
